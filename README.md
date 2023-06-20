@@ -20,7 +20,7 @@ npx cypress open --e2e
 
 ### Identify and Resolve Code Issues
 
-When executing the tests in `todo.cy.js`, you will notice that tests `1.2`, `1.4.1`, and `1.4.4` are currently failing. Your task is to identify the cause of failure in each test and make the necessary adjustments to the code in order to resolve the issues. Your goal is to ensure that the tests pass as expected.
+When executing the tests in `todo.cy.ts`, you will notice that tests `1.2`, `1.4.1`, and `1.4.4` are currently failing. Your task is to identify the cause of failure in each test and make the necessary adjustments to the code in order to resolve the issues. Your goal is to ensure that the tests pass as expected.
 
 ### Expand the Test Suite
 
