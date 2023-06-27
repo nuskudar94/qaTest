@@ -7,7 +7,7 @@ Please clone this project, carefully follow the provided instructions, and submi
 Install the project by running
 
 ```sh
-npm ci
+npm install
 ```
 
 Run the Cypress end to end project by running
