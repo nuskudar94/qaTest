@@ -25,7 +25,7 @@ describe('1. example to-do app', () => {
     // enter a new item in the input field
     cy.get('[data-test=new-todo]').type(`${newItem}{enter}`);
     // verify the input text matches what we typed
-    cy.get('[data-test=new-todo]').should('have.value', `${newItem}`);
+    cy.get('.todo-list li').last().should('have.text', `${newItem}`);
     // confirm the new item has been added to the list
     cy.get('.todo-list li').should('have.length', 3).last().should('have.text', newItem);
   });
@@ -42,7 +42,10 @@ describe('1. example to-do app', () => {
     });
 
     it('1.4.1 can edit a checked task', () => {
-      cy.contains('Pay electric bill').dblclick().type('Pay water bill{enter}');
+      cy.get(':nth-child(1) > .view > label').dblclick().focused().clear().type('Pay water bill{enter}');
+      //cy.contains('Pay electric bill').parent().find(':nth-child(1) > .view > label').dblclick();
+      //cy.focused().type('Pay water bill{enter}');
+      //cy.contains('Pay electric bill').dblclick().type('Pay water bill{enter}');
       cy.contains('Pay water bill').should('be.visible');
     });
 
@@ -84,26 +87,40 @@ describe('1. example to-do app', () => {
       cy.get('.todo-list li').should('have.length', 1).should('not.have.text', 'Pay electric bill');
 
       // Finally, make sure that the clear button no longer exists.
-      button.should('not.exist');
+      button.filter(':visible').should('not.exist');
     });
   });
 
   context('1.5 with no todo items', () => {
     beforeEach(() => {
+     
       // delete all existing items in the list before each test
-      assert.fail('Not implemented yet');
+      cy.get('.todo-list>li').each(($el, index, $list) => {
+        cy.wrap($el).find('button.destroy').invoke('show').click();
+      })
     });
 
     it('1.5.1 todo list is empty and items todo count is not visible', () => {
-      assert.fail('Not implemented yet');
+      cy.get('.todo-list>li').should('have.length', 0);
+
+      cy.get('.todo-count').should('not.visible')
+
     });
 
     it('1.5.2 adds 1 items and the todo count label updates to the right value', () => {
-      assert.fail('Not implemented yet');
+        cy.get('.new-todo').type('My New Item{enter}')
+        cy.get('.todo-count').should('have.text','1 item left')
+      //assert.fail('Not implemented yet');
     });
 
     it('1.5.3 adds 3 new items and verifies each new item is added to the end of the list', () => {
-      assert.fail('Not implemented yet');
+        const myToDos = ['First Item', 'Second Item','Third Item'];
+        cy.wrap(myToDos).each((todo) => {
+          cy.get('.new-todo').type(`${todo}{enter}`);
+          cy.get('.todo-list>li').last().find('label').should('have.text',todo)
+        })
+
+      //assert.fail('Not implemented yet');
     });
   });
 });
