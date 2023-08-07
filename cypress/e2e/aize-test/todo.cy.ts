@@ -43,9 +43,6 @@ describe('1. example to-do app', () => {
 
     it('1.4.1 can edit a checked task', () => {
       cy.get(':nth-child(1) > .view > label').dblclick().focused().clear().type('Pay water bill{enter}');
-      //cy.contains('Pay electric bill').parent().find(':nth-child(1) > .view > label').dblclick();
-      //cy.focused().type('Pay water bill{enter}');
-      //cy.contains('Pay electric bill').dblclick().type('Pay water bill{enter}');
       cy.contains('Pay water bill').should('be.visible');
     });
 
